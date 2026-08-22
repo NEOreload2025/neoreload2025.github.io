@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgentOS 治理系統 — NEO 的個人作品集</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg-2: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-2: #3fb950;
+    --warn: #d29922;
+    --danger: #f85149;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 20px; }
+  header.hero {
+    padding: 72px 0 48px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, #0d1117 0%, #0d1117 70%, rgba(88,166,255,0.06) 100%);
+  }
+  .badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3px 12px;
+    margin-bottom: 20px;
+  }
+  h1 { font-size: 40px; line-height: 1.2; margin-bottom: 16px; letter-spacing: -0.5px; }
+  h1 .accent { color: var(--accent); }
+  .subtitle { font-size: 18px; color: var(--muted); max-width: 680px; }
+  .hero-stats { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 32px; }
+  .stat { display: flex; flex-direction: column; }
+  .stat .num { font-size: 28px; font-weight: 700; color: var(--accent); font-family: var(--mono); }
+  .stat .label { font-size: 13px; color: var(--muted); }
+  section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: none; }
+  h2 { font-size: 24px; margin-bottom: 8px; letter-spacing: -0.3px; }
+  h2 .dot { color: var(--accent); }
+  .section-desc { color: var(--muted); margin-bottom: 28px; font-size: 15px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .card h3 { font-size: 16px; margin-bottom: 10px; color: var(--text); }
+  .card h3 .tag { font-family: var(--mono); font-size: 12px; color: var(--accent); }
+  .card p, .card li { font-size: 14px; color: var(--muted); }
+  .card ul { list-style: none; padding-left: 0; }
+  .card li { padding: 3px 0; }
+  .card li::before { content: "▸ "; color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 13px; background: var(--bg-2); }
+  td code, .mono { font-family: var(--mono); font-size: 13px; }
+  code { font-family: var(--mono); background: var(--bg-2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; font-size: 13px; color: var(--accent-2); }
+  .story { margin-bottom: 20px; }
+  .story h3 { font-size: 17px; margin-bottom: 8px; color: var(--text); }
+  .story h3 .num { color: var(--accent); font-family: var(--mono); margin-right: 8px; }
+  .story p { color: var(--muted); font-size: 14.5px; }
+  .story .highlight { color: var(--accent-2); }
+  .links { display: flex; flex-wrap: wrap; gap: 12px; }
+  .links a {
+    display: inline-block;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all .15s;
+  }
+  .links a:hover { border-color: var(--accent); color: var(--accent); }
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    margin: 16px 0;
+  }
+  .flow .step { background: var(--bg-2); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; }
+  .flow .arrow { color: var(--accent); }
+  footer { padding: 40px 0 60px; color: var(--muted); font-size: 13px; text-align: center; }
+  footer a { color: var(--accent); text-decoration: none; }
+  @media (max-width: 600px) {
+    h1 { font-size: 30px; }
+    .hero-stats { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="badge">單人開發者 · 自學轉職 DevOps/SRE</span>
+    <h1>讓一套 AI agent 系統<br><span class="accent">24/7 自駕</span>的治理設計</h1>
+    <p class="subtitle">我一個人，用一套「程序憲法」＋多模型路由＋成本治理，讓 AI agent 在我不在電腦前時照樣收件、巡檢、批次、告警。這頁記錄這套設計是怎麼搭起來的、撐起了哪些 workflow、踩過哪些坑。</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="num">19</span><span class="label">個常駐 cron workflow</span></div>
+      <div class="stat"><span class="num">$10</span><span class="label">每月 AI 成本上限</span></div>
+      <div class="stat"><span class="num">12</span><span class="label">處被第三方抓出的矛盾</span></div>
+      <div class="stat"><span class="num">58</span><span class="label">行（憲法從 148 行瘦身）</span></div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2><span class="dot">◆</span> 為什麼需要這套治理</h2>
+    <p class="section-desc">痛點不是「模型不夠強」，而是「沒有約束的 agent 會自我合理化、文件會互相矛盾、失效會無聲」。</p>
+    <div class="grid">
+      <div class="card">
+        <h3>模型每天都在變</h3>
+        <p>Go／Zen／NIM 三個池、19 個 alias，可用性天天漂移。8 天內 default 模型被改了 5 次，全靠「文件跟不上實況」。</p>
+      </div>
+      <div class="card">
+        <h3>agent 會繞過規則</h3>
+        <p>某個 agent 在 fallback 撞 429 時，直接改掉整個 hermes 的預設模型。威脅模型不是「它不懂」，是「它會自我合理化」。</p>
+      </div>
+      <div class="card">
+        <h3>失效是無聲的</h3>
+        <p>檔案「看起來存在」但內容早就過時。一次架構審查抓出 12 處可查證的矛盾，其中 4 處直接誤導派工判斷。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="dot">◆</span> 核心設計：四塊基石</h2>
+    <p class="section-desc">不依賴「記性」，而是靠機制讓系統可預測、可回滾、可驗證。</p>
+    <div class="grid">
+      <div class="card">
+        <h3>程序憲法 <span class="tag">(agentos-constitution)</span></h3>
+        <ul>
+          <li>三級授權 T1／T2／T3：做錯的代價決定層級</li>
+          <li>防漂移閘門：會簽綁對象、回滾限縮、逾期自動 rollback</li>
+          <li>最終監督者永遠是「人」</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>單一事實來源 <span class="tag">(STATE.md + git)</span></h3>
+        <ul>
+          <li>模型現況只有一個權威檔，其餘全部降級成指針</li>
+          <li>checker 跑三類回歸測試：alias 比對、路徑存在性、幽靈模型掃描</li>
+          <li>Obsidian 只當唯讀備查快照</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>分層派工 <span class="tag">(T0–T3)</span></h3>
+        <ul>
+          <li>決策層（T0）人親自；執行層（T2/T3）用便宜模型</li>
+          <li>付費買決策、免費跑執行</li>
+          <li>驗收條件必須可獨立重跑，否則不下放</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>多模型交叉審查 <span class="tag">(red-team)</span></h3>
+        <ul>
+          <li>請第三方模型（OX alpha、N550）紅隊審查自己的架構</li>
+          <li>一石二鳥：測模型能力 ＋ 測架構自洽</li>
+          <li>共識／分歧／獨有洞見三方交叉比對</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="dot">◆</span> 常駐自動化：19 個 cron 在跑</h2>
+    <p class="section-desc">這些是「人不在電腦前，系統照樣運作」的證明——不是 demo，是每天都實際執行的 production workflow。</p>
+    <table>
+      <tr><th>Workflow</th><th>頻率</th><th>它守護什麼</th></tr>
+      <tr><td><code>config-watchdog</code></td><td>每 30 分</td><td>離線 hash 比對，config.yaml 被偷偷改就告警</td></tr>
+      <tr><td><code>drift-detection</code></td><td>每天 06:00</td><td>偵測架構漂離單一事實來源（STATE.md）</td></tr>
+      <tr><td><code>memory-auto-archive</code></td><td>每 6 小時</td><td>記憶快滿時，低頻細節外移到 Obsidian</td></tr>
+      <tr><td><code>SOP 障礙週檢討</code></td><td>每週日 20:00</td><td>掃 log 補漏網，錯誤不變成一次性雜訊</td></tr>
+      <tr><td><code>batch-offpeak-deepseek</code></td><td>每天 20:00</td><td>離峰半價時段跑批次重活，省錢</td></tr>
+      <tr><td><code>nim429-watchdog</code></td><td>每 360 分</td><td>免費池 NIM 的 429 健康度監控</td></tr>
+      <tr><td><code>sync-opencode-models-daily</code></td><td>每天 06:00</td><td>同步 opencode 模型清單（清單會列出已下線的模型）</td></tr>
+      <tr><td><code>opencode-leaderboard-weekly</code></td><td>每週一 07:00</td><td>抓官方排行榜變化，支援選模決策</td></tr>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="dot">◆</span> 一次完整的紅隊審查 loop</h2>
+    <p class="section-desc">請第三方模型審查自己的架構，再把它的發現收斂落地——這整套本身就是一個可複用的治理動作。</p>
+    <div class="flow">
+      <span class="step">OX alpha 審查 7 題</span>
+      <span class="arrow">→</span>
+      <span class="step">抓出 12 處矛盾</span>
+      <span class="arrow">→</span>
+      <span class="step">事實收斂（唯一權威檔）</span>
+      <span class="arrow">→</span>
+      <span class="step">憲法瘦身 148→58 行</span>
+      <span class="arrow">→</span>
+      <span class="step">安全封堵（key 輪換＋hook＋權限）</span>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h3>交叉對比的價值</h3>
+        <p>N550 負責「結構更清楚」（決策權矩陣表、職能對應欄），OX alpha 負責「防繞過機制不能砍」（它讀過原憲法，知道哪些閘門是核心）。兩者互補，我再綜合落地。</p>
+      </div>
+      <div class="card">
+        <h3>抓到的典型問題</h3>
+        <ul>
+          <li>「歷史快照」殭屍段落會被 agent 復活引用</li>
+          <li>checker 檢查的是「舊規則」，規則改了它沒跟上（hollow 化）</li>
+          <li>瘦身草案順手引入了未驗證的新流程</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="dot">◆</span> 三個工程故事（面試能講的那種）</h2>
+    <p class="section-desc">這些不是「我用了某個工具」，而是「我踩過坑、歸因、然後把教訓變成可執行規則」。</p>
+    <div class="story">
+      <h3><span class="num">01</span> Incident Postmortem：八小時六件事故，只有一件是模型問題</h3>
+      <p>某天系統出了六件事故，逐件歸因後發現：<span class="highlight">5 件是設定漂移／文件矛盾／失效無聲，只有 1 件是模型品質問題</span>。結論是「框架本身正確，換框架只會把這五件事重來一次」——於是定下「框架鎖定、只換 LLM」的決策。這是標準的 SRE postmortem 思維。</p>
+    </div>
+    <div class="story">
+      <h3><span class="num">02</span> Cost Governance：$10/月怎麼養一套 24/7 agent</h3>
+      <p>把成本拆開算：Go 訂閱 <code>$10</code> ≈ 90M output tokens（離峰價），官方直連同樣 $10 只有 15.2M——<span class="highlight">訂閱贏 6 倍</span>。策略是「付費池跑決策、免費池跑執行、離峰半價跑批次、免費池當煞車」。會自己觸發自己的常駐 agent，一律掛免費額度當煞車。</p>
+    </div>
+    <div class="story">
+      <h3><span class="num">03</span> 多模型路由：清單有列 ≠ 叫得動</h3>
+      <p>實測發現 <code>opencode models</code> 列出的模型有三個已 EOL（呼叫回 HTTP 410）。所以「推薦任何模型前先跑 5-token probe 看真實輸出，grep 清單是查字典不是驗證」。加上 fallback 三層鏈（Go 燒光 → 官方 → Zen → NIM），讓系統在模型池掛掉時自動降級，全程不需人為切換。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="dot">◆</span> 其他作品</h2>
+    <p class="section-desc">用同一套自律流程做出來的實際產物。</p>
+    <div class="links">
+      <a href="https://neoreload2025.github.io/ricoh-imc6000" target="_blank">RICOH IM C6000 產品站</a>
+      <a href="https://neoreload2025.github.io/quantum-qubit-showcase" target="_blank">量子 3D 教學站</a>
+      <a href="https://github.com/NEOreload2025/legend-newbie-village" target="_blank">熱血傳奇新手村（Phaser 3）</a>
+      <a href="https://github.com/NEOreload2025/agentos-constitution" target="_blank">AgentOS 憲法（本作品的核心 repo）</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>NEO · 單人開發者，自學轉職 DevOps/SRE 中</p>
+    <p>這套架構的終極 KPI 是「幫我轉職成功」，不是「它自身完美運轉」——所以它被設計成半小時能向陌生人講完的大小。</p>
+  </div>
+</footer>
+
+</body>
+</html>
