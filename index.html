@@ -4,111 +4,260 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AgentOS 治理系統 — NEO 的個人作品集</title>
+<script>
+(function(){var r=document.documentElement,t=localStorage.getItem('theme');
+if(t==='light'||t==='dark')r.dataset.theme=t;})();
+</script>
 <style>
-  :root {
-    --bg: #0d1117;
-    --bg-2: #161b22;
-    --border: #30363d;
-    --text: #e6edf3;
-    --muted: #8b949e;
-    --accent: #58a6ff;
-    --accent-2: #3fb950;
-    --warn: #d29922;
-    --danger: #f85149;
-    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
-    line-height: 1.7;
-    font-size: 16px;
-  }
-  .wrap { max-width: 880px; margin: 0 auto; padding: 0 20px; }
-  header.hero {
-    padding: 72px 0 48px;
-    border-bottom: 1px solid var(--border);
-    background: linear-gradient(180deg, #0d1117 0%, #0d1117 70%, rgba(88,166,255,0.06) 100%);
-  }
-  .badge {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--accent);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 3px 12px;
-    margin-bottom: 20px;
-  }
-  h1 { font-size: 40px; line-height: 1.2; margin-bottom: 16px; letter-spacing: -0.5px; }
-  h1 .accent { color: var(--accent); }
-  .subtitle { font-size: 18px; color: var(--muted); max-width: 680px; }
-  .hero-stats { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 32px; }
-  .stat { display: flex; flex-direction: column; }
-  .stat .num { font-size: 28px; font-weight: 700; color: var(--accent); font-family: var(--mono); }
-  .stat .label { font-size: 13px; color: var(--muted); }
-  section { padding: 48px 0; border-bottom: 1px solid var(--border); }
-  section:last-of-type { border-bottom: none; }
-  h2 { font-size: 24px; margin-bottom: 8px; letter-spacing: -0.3px; }
-  h2 .dot { color: var(--accent); }
-  .section-desc { color: var(--muted); margin-bottom: 28px; font-size: 15px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
-  .card {
-    background: var(--bg-2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 20px;
-  }
-  .card h3 { font-size: 16px; margin-bottom: 10px; color: var(--text); }
-  .card h3 .tag { font-family: var(--mono); font-size: 12px; color: var(--accent); }
-  .card p, .card li { font-size: 14px; color: var(--muted); }
-  .card ul { list-style: none; padding-left: 0; }
-  .card li { padding: 3px 0; }
-  .card li::before { content: "▸ "; color: var(--accent); }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
-  th { color: var(--muted); font-weight: 600; font-size: 13px; background: var(--bg-2); }
-  td code, .mono { font-family: var(--mono); font-size: 13px; }
-  code { font-family: var(--mono); background: var(--bg-2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; font-size: 13px; color: var(--accent-2); }
-  .story { margin-bottom: 20px; }
-  .story h3 { font-size: 17px; margin-bottom: 8px; color: var(--text); }
-  .story h3 .num { color: var(--accent); font-family: var(--mono); margin-right: 8px; }
-  .story p { color: var(--muted); font-size: 14.5px; }
-  .story .highlight { color: var(--accent-2); }
-  .links { display: flex; flex-wrap: wrap; gap: 12px; }
-  .links a {
-    display: inline-block;
-    padding: 8px 16px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    text-decoration: none;
-    font-size: 14px;
-    transition: all .15s;
-  }
-  .links a:hover { border-color: var(--accent); color: var(--accent); }
-  .flow {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--muted);
-    margin: 16px 0;
-  }
-  .flow .step { background: var(--bg-2); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; }
-  .flow .arrow { color: var(--accent); }
-  footer { padding: 40px 0 60px; color: var(--muted); font-size: 13px; text-align: center; }
-  footer a { color: var(--accent); text-decoration: none; }
-  @media (max-width: 600px) {
-    h1 { font-size: 30px; }
-    .hero-stats { gap: 16px; }
-  }
+:root {
+  --bg: #0d1117;
+  --bg-2: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-2: #b6c2cf;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --accent-2: #3fb950;
+  --warn: #d29922;
+  --danger: #f85149;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --glow-1: rgba(88,166,255,.16);
+  --glow-2: rgba(188,140,255,.11);
+  --grid-line: rgba(139,148,158,.08);
+  --wm-stroke: rgba(88,166,255,.13);
+  --shadow: rgba(1,4,9,.45);
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #ffffff;
+  --bg-2: #f6f8fa;
+  --border: #d0d7de;
+  --text: #1f2328;
+  --text-2: #424a53;
+  --muted: #59636e;
+  --accent: #0969da;
+  --accent-2: #1a7f37;
+  --warn: #9a6700;
+  --danger: #cf222e;
+  --glow-1: rgba(9,105,218,.09);
+  --glow-2: rgba(130,80,223,.07);
+  --grid-line: rgba(31,35,40,.06);
+  --wm-stroke: rgba(9,105,218,.16);
+  --shadow: rgba(140,150,160,.28);
+  color-scheme: light;
+}
+section[data-accent="red"]    { --sec:#f85149; --sec-glow:rgba(248,81,73,.22); }
+section[data-accent="blue"]   { --sec:#58a6ff; --sec-glow:rgba(88,166,255,.22); }
+section[data-accent="green"]  { --sec:#3fb950; --sec-glow:rgba(63,185,80,.22); }
+section[data-accent="purple"] { --sec:#bc8cff; --sec-glow:rgba(188,140,255,.22); }
+section[data-accent="amber"]  { --sec:#d29922; --sec-glow:rgba(210,153,34,.22); }
+section[data-accent="cyan"]   { --sec:#39c5cf; --sec-glow:rgba(57,197,207,.22); }
+:root[data-theme="light"] section[data-accent="red"]    { --sec:#cf222e; --sec-glow:rgba(207,34,46,.22); }
+:root[data-theme="light"] section[data-accent="blue"]   { --sec:#0969da; --sec-glow:rgba(9,105,218,.22); }
+:root[data-theme="light"] section[data-accent="green"]  { --sec:#1a7f37; --sec-glow:rgba(26,127,55,.22); }
+:root[data-theme="light"] section[data-accent="purple"] { --sec:#8250df; --sec-glow:rgba(130,80,223,.22); }
+:root[data-theme="light"] section[data-accent="amber"]  { --sec:#9a6700; --sec-glow:rgba(154,103,0,.22); }
+:root[data-theme="light"] section[data-accent="cyan"]   { --sec:#0e7490; --sec-glow:rgba(14,116,144,.22); }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+  line-height: 1.7;
+  font-size: 16px;
+  transition: background-color .25s ease, color .25s ease;
+}
+.wrap { max-width: 880px; margin: 0 auto; padding: 0 20px; }
+
+header.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 72px 0 48px;
+  border-bottom: 1px solid var(--border);
+  background:
+    radial-gradient(600px 300px at 15% 0%, var(--glow-1), transparent 70%),
+    radial-gradient(520px 280px at 85% 5%, var(--glow-2), transparent 70%),
+    var(--bg);
+}
+header.hero::before {
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(75% 85% at 50% 0%, #000 30%, transparent 80%);
+          mask-image: radial-gradient(75% 85% at 50% 0%, #000 30%, transparent 80%);
+}
+header.hero::after {
+  content:"24/7"; position:absolute; top:4px; right:-10px;
+  font-family:var(--mono); font-weight:800; line-height:1;
+  font-size:clamp(110px, 22vw, 210px);
+  color:transparent; -webkit-text-stroke:1.5px var(--wm-stroke);
+  pointer-events:none; user-select:none;
+}
+
+.badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  border: 1px solid rgba(88,166,255,.35);
+  border-radius: 20px;
+  padding: 3px 12px;
+  margin-bottom: 20px;
+  background: rgba(88,166,255,.08);
+}
+h1 { font-size: clamp(32px, 6vw, 44px); line-height: 1.2; margin-bottom: 16px; letter-spacing: -.02em; font-weight: 800; }
+h1 .accent {
+  background: linear-gradient(90deg,#58a6ff,#bc8cff,#58a6ff);
+  background-size:200% auto;
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  animation: shimmer 8s linear infinite;
+}
+@keyframes shimmer { to { background-position: 200% center; } }
+@media (prefers-reduced-motion: reduce) {
+  * { animation:none !important; transition:none !important; }
+}
+.subtitle { font-size: 18px; color: var(--text-2); max-width: 680px; }
+.hero-stats { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 32px; }
+.stat { display: flex; flex-direction: column; }
+.stat + .stat { border-left:1px solid var(--border); padding-left:24px; }
+.stat .num {
+  font-size: clamp(30px, 4vw, 38px);
+  font-weight: 700;
+  font-family: var(--mono);
+  background: linear-gradient(180deg, #79c0ff, #58a6ff);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.stat .label { font-size: 13px; color: var(--muted); }
+
+section { padding: 48px 0; border-bottom: none; position: relative; }
+section::after {
+  content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
+  background: linear-gradient(90deg, transparent, var(--border) 25%, var(--border) 75%, transparent);
+}
+section:last-of-type::after { display: none; }
+h2 {
+  font-size: clamp(22px, 3.5vw, 28px);
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+}
+h2::before {
+  content: attr(data-num); display:block;
+  font-family:var(--mono); font-size:12px; font-weight:400;
+  letter-spacing:.12em; color:var(--sec); margin-bottom:8px;
+}
+h2 .dot { color: var(--sec); }
+.section-desc { color: var(--muted); margin-bottom: 28px; font-size: 15px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+.card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--sec);
+  box-shadow:
+    0 0 0 1px var(--sec-glow),
+    0 12px 28px var(--shadow),
+    0 0 22px var(--sec-glow);
+}
+.card h3 { font-size: 16px; margin-bottom: 10px; color: var(--text); }
+.card h3 .tag { font-family: var(--mono); font-size: 12px; color: var(--sec); }
+.card p, .card li { font-size: 14px; color: var(--muted); }
+.card ul { list-style: none; padding-left: 0; }
+.card li { padding: 3px 0; }
+.card li::before { content: "▸ "; color: var(--sec); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; font-size: 13px; background: var(--bg-2); }
+td code, .mono { font-family: var(--mono); font-size: 13px; }
+code { font-family: var(--mono); background: var(--bg-2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; font-size: 13px; color: var(--accent-2); }
+.story { margin-bottom: 20px; }
+.story h3 { font-size: 17px; margin-bottom: 8px; color: var(--text); }
+.story h3 .num { color: var(--sec); font-family: var(--mono); margin-right: 8px; }
+.story p { color: var(--text-2); font-size: 14.5px; }
+.story .highlight { color: var(--accent-2); }
+.links { display: flex; flex-wrap: wrap; gap: 12px; }
+.links a {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 14px;
+  transition: all .15s, transform .15s, box-shadow .15s;
+}
+.links a:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(88,166,255,.18); }
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
+  margin: 16px 0;
+}
+.flow .step {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  transition: border-color .15s, color .15s;
+}
+.flow .step:hover { border-color: var(--sec); color: var(--text); }
+.flow .arrow { color: var(--accent); }
+tbody tr { transition: background-color .15s ease; }
+tbody tr:hover { background: rgba(88,166,255,.05); }
+:root[data-theme="light"] tbody tr:hover { background: rgba(9,105,218,.05); }
+
+footer { padding: 40px 0 60px; color: var(--muted); font-size: 13px; text-align: center; }
+footer a { color: var(--accent); text-decoration: none; }
+
+#theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 50;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color .25s ease, background-color .25s ease;
+}
+#theme-toggle:hover { border-color: var(--accent); }
+#theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+#theme-toggle svg { width: 20px; height: 20px; stroke: var(--text); transition: stroke .25s ease; }
+[data-theme="light"] .icon-moon { display:none; }
+:root:not([data-theme="light"]) .icon-sun { display:none; }
+
+@media (max-width: 600px) {
+  h1 { font-size: 30px; }
+  .hero-stats { gap: 16px; }
+  .stat + .stat { border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 16px; }
+  header.hero::after { font-size: 96px; opacity: .6; right: -20px; }
+  #theme-toggle { top: 12px; right: 12px; }
+}
 </style>
 </head>
 <body>
+
+<button id="theme-toggle" aria-label="切換深淺色主題">
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+</button>
 
 <header class="hero">
   <div class="wrap">
@@ -124,7 +273,7 @@
   </div>
 </header>
 
-<section>
+<section data-accent="red" data-num="SECTION 01">
   <div class="wrap">
     <h2><span class="dot">◆</span> 為什麼需要這套治理</h2>
     <p class="section-desc">痛點不是「模型不夠強」，而是「沒有約束的 agent 會自我合理化、文件會互相矛盾、失效會無聲」。</p>
@@ -145,7 +294,7 @@
   </div>
 </section>
 
-<section>
+<section data-accent="blue" data-num="SECTION 02">
   <div class="wrap">
     <h2><span class="dot">◆</span> 核心設計：四塊基石</h2>
     <p class="section-desc">不依賴「記性」，而是靠機制讓系統可預測、可回滾、可驗證。</p>
@@ -186,7 +335,7 @@
   </div>
 </section>
 
-<section>
+<section data-accent="green" data-num="SECTION 03">
   <div class="wrap">
     <h2><span class="dot">◆</span> 常駐自動化：19 個 cron 在跑</h2>
     <p class="section-desc">這些是「人不在電腦前，系統照樣運作」的證明——不是 demo，是每天都實際執行的 production workflow。</p>
@@ -204,7 +353,7 @@
   </div>
 </section>
 
-<section>
+<section data-accent="purple" data-num="SECTION 04">
   <div class="wrap">
     <h2><span class="dot">◆</span> 一次完整的紅隊審查 loop</h2>
     <p class="section-desc">請第三方模型審查自己的架構，再把它的發現收斂落地——這整套本身就是一個可複用的治理動作。</p>
@@ -236,7 +385,7 @@
   </div>
 </section>
 
-<section>
+<section data-accent="amber" data-num="SECTION 05">
   <div class="wrap">
     <h2><span class="dot">◆</span> 三個工程故事（面試能講的那種）</h2>
     <p class="section-desc">這些不是「我用了某個工具」，而是「我踩過坑、歸因、然後把教訓變成可執行規則」。</p>
@@ -255,7 +404,7 @@
   </div>
 </section>
 
-<section>
+<section data-accent="cyan" data-num="SECTION 06">
   <div class="wrap">
     <h2><span class="dot">◆</span> 其他作品</h2>
     <p class="section-desc">用同一套自律流程做出來的實際產物。</p>
@@ -275,5 +424,10 @@
   </div>
 </footer>
 
+<script>
+document.getElementById('theme-toggle').addEventListener('click',function(){
+var r=document.documentElement,next=r.dataset.theme==='light'?'dark':'light';
+r.dataset.theme=next;localStorage.setItem('theme',next);});
+</script>
 </body>
 </html>
